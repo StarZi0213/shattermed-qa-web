@@ -8,9 +8,14 @@ let currentDataset = 'top10';
 let currentLang = 'en';
 const dataCache = {};
 
+// 数据改为从 GitHub Raw 静态读取，避免 Vercel /data 配置问题
 function getDataUrl() {
-  if (currentDataset === 'top10') return `/data/hard-top10-${currentLang}.json`;
-  return `/data/hard-top30-rag-${currentLang}.json`;
+  const base =
+    'https://raw.githubusercontent.com/StarZi0213/shattermed-qa/main/public/data';
+  if (currentDataset === 'top10') {
+    return `${base}/hard-top10-${currentLang}.json`;
+  }
+  return `${base}/hard-top30-rag-${currentLang}.json`;
 }
 
 function getCacheKey() { return `${currentDataset}-${currentLang}`; }
