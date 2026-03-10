@@ -14,7 +14,6 @@ function initCharts() {
   renderDropChart();
   renderRagScatter();
   renderRagBar();
-  renderCaseStudy();
   renderShatteringDemo();
 }
 
@@ -202,36 +201,6 @@ function renderRagBar() {
     xaxis: { tickangle: -40 },
     showlegend: false,
     margin: { l: 50, r: 30, t: 30, b: 120 },
-  }, PLOTLY_CFG);
-}
-
-/* ============ CASE STUDY ============ */
-function renderCaseStudy() {
-  const models = ['BioMistral', 'Falcon3', 'Llama-3.1', 'OpenBioLLM', 'Qwen3', 'Yi-1.5', 'c4ai-r7b', 'Gemma-2', 'GPT-4.1-mini', 'GPT-4.1-nano', 'GPT-5-mini', 'GPT-5-nano', 'Grok-4.1-NR', 'Grok-4-NR', 'InternLM3', 'MedGemma', 'Med42', 'Grok-4.1-R', 'Grok-4-R', 'Meditron', 'Granite'];
-  const directOk = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0];
-  const ragOk =    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0];
-  const shifted = models.map((m, i) => {
-    if (directOk[i] === 0 && ragOk[i] === 1) return '✗→✓';
-    if (directOk[i] === 1 && ragOk[i] === 1) return '✓→✓';
-    return '✗→✗';
-  });
-  const colors = shifted.map(s => s === '✗→✓' ? '#10b981' : s === '✓→✓' ? '#2563eb' : '#ef4444');
-  const data = [{
-    x: models, y: shifted.map(s => s === '✗→✓' ? 2 : s === '✓→✓' ? 1 : 0),
-    type: 'bar',
-    marker: { color: colors },
-    text: shifted, textposition: 'inside',
-    hovertext: models.map((m, i) => `${m}: Direct=${directOk[i] ? '✓' : '✗'}, RAG=${ragOk[i] ? '✓' : '✗'}`),
-  }];
-  Plotly.newPlot('chart-case-study', data, {
-    ...PLOTLY_LAYOUT_BASE,
-    yaxis: { title: 'Recovery Status', tickvals: [0, 1, 2], ticktext: ['✗→✗ Failed Both', '✓→✓ Always Correct', '✗→✓ RAG Corrected'], gridcolor: '#e2e8f0' },
-    xaxis: { tickangle: -40 },
-    showlegend: false,
-    margin: { l: 140, r: 30, t: 30, b: 120 },
-    annotations: [
-      { x: 10, y: 2.6, text: '<b>16/17</b> failing models corrected by RAG', showarrow: false, font: { color: '#10b981', size: 13 } },
-    ],
   }, PLOTLY_CFG);
 }
 
