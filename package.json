@@ -1,0 +1,14 @@
+{
+  "name": "shattermed-qa-web",
+  "version": "1.0.0",
+  "description": "Project page for ShatterMed-QA: A Topology-Regularized Multi-Hop Clinical Benchmark",
+  "main": "server.js",
+  "scripts": {
+    "build": "node build.js",
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}

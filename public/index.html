@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShatterMed-QA: A Topology-Regularized Multi-Hop Clinical Benchmark</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.plot.ly/plotly-2.35.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo">ShatterMed-QA</a>
+      <div class="nav-links">
+        <a href="#abstract">Abstract</a>
+        <a href="#methodology">Method</a>
+        <a href="#dataset">Dataset</a>
+        <a href="#results">Results</a>
+        <a href="#showcase">Showcase</a>
+        <a href="https://github.com/" target="_blank" class="btn-github">
+          <i class="fab fa-github"></i> Code (Coming Soon)
+        </a>
+      </div>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="badge">Under Review</div>
+      <h1>ShatterMed-QA</h1>
+      <p class="subtitle">Topology-Regularized Multi-Hop Clinical Reasoning Benchmark for Exposing Shortcut Learning in Medical LLMs</p>
+      <p class="hero-stats">
+        <span class="stat"><strong>10,558</strong> Questions</span>
+        <span class="stat"><strong>20</strong> LLMs Evaluated</span>
+        <span class="stat"><strong>Bilingual</strong> EN & ZH</span>
+        <span class="stat"><strong>1,500</strong> Expert Validated</span>
+      </p>
+      <div class="hero-actions">
+        <a href="#dataset" class="btn btn-primary">Explore Dataset</a>
+        <a href="#results" class="btn btn-outline">View Results</a>
+        <a href="https://github.com/" target="_blank" class="btn btn-outline">
+          <i class="fab fa-github"></i> GitHub (Coming Soon)
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Abstract -->
+  <section id="abstract" class="section">
+    <div class="container">
+      <h2 class="section-title">Abstract</h2>
+      <div class="abstract-card">
+        <p>While Large Language Models (LLMs) achieve expert-level performance on standard medical benchmarks through single-hop factual recall, they severely struggle with the complex, multi-hop diagnostic reasoning required in real-world clinical settings. A primary obstacle is <em>"shortcut learning,"</em> where models exploit highly connected, generic hub nodes (e.g., "inflammation") in knowledge graphs to bypass authentic micro-pathological cascades.</p>
+        <p>To address this, we introduce <strong>ShatterMed-QA</strong>, a bilingual benchmark of <strong>10,558 multi-hop clinical questions</strong> designed to rigorously evaluate deep diagnostic reasoning. Our framework constructs a topology-regularized medical Knowledge Graph using a novel <em>k</em>-Shattering algorithm, which physically prunes generic hubs to explicitly sever logical shortcuts. We synthesize evaluation vignettes by applying implicit bridge entity masking and topology-driven hard negative sampling, forcing models to navigate biologically plausible distractors without relying on superficial elimination.</p>
+        <p>Comprehensive evaluations of <strong>20 LLMs</strong> reveal massive performance degradation on our multi-hop tasks, particularly among domain-specific models. Crucially, restoring the masked evidence via Retrieval-Augmented Generation (RAG) triggers near-universal performance recovery, validating ShatterMed-QA's structural fidelity.</p>
+        <div class="keywords">
+          <span class="kw">Large Language Models</span>
+          <span class="kw">Medical QA</span>
+          <span class="kw">Multi-hop Reasoning</span>
+          <span class="kw">Shortcut Learning</span>
+          <span class="kw">Knowledge Graphs</span>
+          <span class="kw">Topology Regularization</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Methodology -->
+  <section id="methodology" class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">Methodology</h2>
+      <p class="section-desc">An end-to-end framework combining topology-regularized KG construction with constrained multi-hop benchmark synthesis.</p>
+      <div class="method-grid">
+        <div class="method-card">
+          <div class="method-icon"><i class="fas fa-project-diagram"></i></div>
+          <h3>Phase I: KG Construction</h3>
+          <ul>
+            <li><strong>Dynamic Semantic Chunking</strong> — Preserves clinical cascades using 95th-percentile cosine distance thresholds</li>
+            <li><strong>Hierarchical Soft Clustering</strong> — GMM + BIC optimization for overlapping medical topics</li>
+            <li><strong>k-Shattering Regularization</strong> — Physically prunes hub nodes ensuring <em>d<sub>shattered</sub>(u,v) ≥ d<sub>original</sub>(u,v)</em></li>
+          </ul>
+        </div>
+        <div class="method-card">
+          <div class="method-icon"><i class="fas fa-flask"></i></div>
+          <h3>Phase II: QA Synthesis</h3>
+          <ul>
+            <li><strong>Bridge Entity Masking</strong> — The implicit bridge <em>e<sub>bridge</sub></em> is strictly excluded from the vignette</li>
+            <li><strong>Topology-Driven Distractors</strong> — Sibling nodes sampled from the pathological hierarchy as hard negatives</li>
+            <li><strong>Evidence-Grounded</strong> — Every reasoning chain anchored to exact sentence-level source text</li>
+          </ul>
+        </div>
+        <div class="method-card full-width">
+          <div class="method-icon"><i class="fas fa-route"></i></div>
+          <h3>k-Shattering: From Shortcuts to Deep Reasoning</h3>
+          <div id="chart-shattering" class="chart-container"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dataset Statistics -->
+  <section id="dataset" class="section">
+    <div class="container">
+      <h2 class="section-title">Dataset Statistics</h2>
+      <p class="section-desc">10,558 meticulously synthesized clinical questions across 5 primary clinical tasks, bifurcated into bilingual and difficulty-based splits.</p>
+
+      <div class="charts-row">
+        <div class="chart-card">
+          <h3>Clinical Task Distribution</h3>
+          <div id="chart-task-pie" class="chart-container"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Task Distribution by Split</h3>
+          <div id="chart-task-bar" class="chart-container"></div>
+        </div>
+      </div>
+
+      <div class="chart-card full-width">
+        <h3>Dataset Quality Metrics</h3>
+        <div id="chart-quality" class="chart-container"></div>
+      </div>
+
+      <div class="chart-card full-width">
+        <h3>Overall Statistics</h3>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Metric</th><th>EN Easy</th><th>EN Hard</th><th>ZH Easy</th><th>ZH Hard</th><th>Overall</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Total QA Pairs</td><td>5,923</td><td>1,692</td><td>2,616</td><td>327</td><td>10,558</td></tr>
+              <tr><td>Avg. Question Length</td><td>155.9</td><td>199.9</td><td>77.5</td><td>107.2</td><td>—</td></tr>
+              <tr><td>Avg. Explanation Length</td><td>805.3</td><td>869.8</td><td>629.7</td><td>593.9</td><td>—</td></tr>
+              <tr><td>Avg. Distractor Similarity</td><td>0.579</td><td>0.606</td><td>0.629</td><td>0.658</td><td>0.598</td></tr>
+              <tr><td>ROUGE-1 vs Content A</td><td>0.096</td><td>0.104</td><td>0.081</td><td>0.076</td><td>0.093</td></tr>
+              <tr><td>ROUGE-1 vs Content B</td><td>0.103</td><td>0.113</td><td>0.088</td><td>0.082</td><td>0.100</td></tr>
+              <tr><td>BLEU-1 vs Evidence</td><td>0.704</td><td>0.681</td><td>0.412</td><td>0.311</td><td>0.609</td></tr>
+              <tr><td>LLM-Judged Clarity (1-5)</td><td>4.72</td><td>4.60</td><td>4.71</td><td>4.52</td><td>4.70</td></tr>
+              <tr><td>LLM-Judged Validity (1-5)</td><td>4.89</td><td>4.83</td><td>4.84</td><td>4.73</td><td>4.87</td></tr>
+              <tr><td>LLM-Judged Difficulty (1-5)</td><td>3.11</td><td>3.11</td><td>3.15</td><td>3.18</td><td>3.11</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Benchmark Comparison -->
+      <div class="chart-card full-width">
+        <h3>Comparison with Existing Benchmarks</h3>
+        <div id="chart-benchmark" class="chart-container"></div>
+      </div>
+
+      <div class="highlight-box">
+        <div class="highlight-item">
+          <span class="highlight-num">1.4%</span>
+          <span class="highlight-label">Error Rate — Expert Validation by Board-Certified Physicians (1,500 questions)</span>
+        </div>
+        <div class="highlight-item">
+          <span class="highlight-num">4.87</span>
+          <span class="highlight-label">Validity Score — Highest among all evaluated benchmarks</span>
+        </div>
+        <div class="highlight-item">
+          <span class="highlight-num">0.598</span>
+          <span class="highlight-label">Distractor Similarity — High cosine similarity confirms effective hard negatives</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section id="results" class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">Experimental Results</h2>
+      <p class="section-desc">Comprehensive zero-shot evaluation of 20 LLMs reveals systemic performance degradation on multi-hop tasks.</p>
+
+      <div class="chart-card full-width">
+        <h3>Zero-Shot Accuracy by Model Category</h3>
+        <div id="chart-accuracy" class="chart-container-tall"></div>
+      </div>
+
+      <div class="charts-row">
+        <div class="chart-card">
+          <h3>Easy→Hard Performance Drop</h3>
+          <div id="chart-drop" class="chart-container"></div>
+        </div>
+        <div class="chart-card">
+          <h3>RAG vs Direct Accuracy (Hard)</h3>
+          <div id="chart-rag-scatter" class="chart-container"></div>
+        </div>
+      </div>
+
+      <div class="chart-card full-width">
+        <h3>RAG Accuracy Improvement (Hard Split)</h3>
+        <div id="chart-rag-bar" class="chart-container"></div>
+      </div>
+
+      <div class="chart-card full-width">
+        <h3>Case Study: RAG Recovery</h3>
+        <div id="chart-case-study" class="chart-container"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dataset Showcase -->
+  <section id="showcase" class="section">
+    <div class="container">
+      <h2 class="section-title">Dataset Showcase</h2>
+      <p class="section-desc">Explore real questions from the ShatterMed-QA benchmark. Click cards to expand detailed model outputs.</p>
+
+      <div class="showcase-controls">
+        <div class="tab-group" id="showcase-dataset-tabs">
+          <button class="tab active" data-dataset="top10">Top 10 Hardest Questions</button>
+          <button class="tab" data-dataset="rag30">Top 30 RAG Lift</button>
+        </div>
+        <div class="lang-toggle">
+          <button class="lang-btn active" data-lang="en">English</button>
+          <button class="lang-btn" data-lang="zh">中文</button>
+        </div>
+      </div>
+
+      <div id="showcase-cards" class="showcase-grid">
+        <div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading questions...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 ShatterMed-QA — Anonymous Submission</p>
+      <p class="footer-links">
+        <a href="https://github.com/" target="_blank"><i class="fab fa-github"></i> GitHub (Coming Soon)</a>
+        <span class="sep">|</span>
+        <a href="#abstract">Paper</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="/js/charts.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>
