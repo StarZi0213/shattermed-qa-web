@@ -82,23 +82,57 @@ function renderQualityRadar() {
 /* ============ BENCHMARK COMPARISON ============ */
 function renderBenchmarkComparison() {
   const datasets = ['MedQA', 'MMedBench', 'MultiMedQA', 'AfriMedQA', 'PubMedQA', 'CRAFT-MedQA', 'MedReason', 'MedQA-Evol', 'ShatterMed-QA'];
+  const traceability = [
+    'Chapter-level',
+    'Chapter-level',
+    'Chapter-level',
+    'Chapter-level',
+    'Abstract-level',
+    'LLM Rationale',
+    'Graph-level',
+    'LLM Rationale',
+    'Exact (Sentence & Page Summary)',
+  ];
+  const sizes = [6110, 8518, 1242, 3723, 1000, 5000, 25484, 51809, 10558];
   const clarity = [3.92, 4.03, 3.93, 3.80, 2.92, 3.71, 3.79, 4.17, 4.70];
   const validity = [3.87, 4.04, 3.94, 3.72, 2.43, 3.52, 3.81, 4.32, 4.87];
   const difficulty = [2.96, 2.79, 2.64, 2.83, 2.46, 2.55, 3.04, 2.94, 3.11];
-  const sizes = [6110, 8518, 1242, 3723, 1000, 5000, 25484, 51809, 10558];
-  const colors = datasets.map((d, i) => i === datasets.length - 1 ? '#2563eb' : '#94a3b8');
+
+  const makeTrace = (name, values, color) => ({
+    name,
+    x: datasets,
+    y: values,
+    type: 'bar',
+    marker: { color },
+    hovertemplate:
+      '<b>%{x}</b><br>' +
+      `${name}: %{y:.2f}<br>` +
+      'Traceability: %{customdata[0]}<br>' +
+      'Size N: %{customdata[1]:,}<extra></extra>',
+    customdata: traceability.map((t, i) => [t, sizes[i]]),
+  });
+
   const data = [
-    { name: 'Clarity', x: datasets, y: clarity, type: 'bar', marker: { color: '#60a5fa' } },
-    { name: 'Validity', x: datasets, y: validity, type: 'bar', marker: { color: '#34d399' } },
-    { name: 'Difficulty', x: datasets, y: difficulty, type: 'bar', marker: { color: '#f87171' } },
+    makeTrace('Clarity', clarity, '#60a5fa'),
+    makeTrace('Validity', validity, '#34d399'),
+    makeTrace('Difficulty', difficulty, '#f87171'),
   ];
+
   Plotly.newPlot('chart-benchmark', data, {
     ...PLOTLY_LAYOUT_BASE,
     barmode: 'group',
     yaxis: { title: 'Score (1-5)', range: [0, 5.2], gridcolor: '#e2e8f0' },
     xaxis: { tickangle: -25 },
     legend: { orientation: 'h', y: 1.1 },
-    annotations: [{ x: 'ShatterMed-QA', y: 5.1, text: '★ Ours', showarrow: false, font: { color: '#2563eb', size: 12, weight: 'bold' } }],
+    annotations: [
+      {
+        x: 'ShatterMed-QA',
+        y: 5.1,
+        text: '★ Ours (Exact evidence, N=10,558)',
+        showarrow: false,
+        font: { color: '#2563eb', size: 12, weight: 'bold' },
+      },
+    ],
   }, PLOTLY_CFG);
 }
 
