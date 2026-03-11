@@ -3,6 +3,19 @@ window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
 });
 
+/* --- Pipeline image zoom --- */
+document.addEventListener('click', (e) => {
+  if (e.target.matches('.pipeline-figure img') && !e.target.classList.contains('zoomed')) {
+    e.target.classList.add('zoomed');
+    const overlay = document.createElement('div');
+    overlay.className = 'pipeline-overlay';
+    document.body.appendChild(overlay);
+    const close = () => { e.target.classList.remove('zoomed'); overlay.remove(); };
+    overlay.addEventListener('click', close);
+    e.target.addEventListener('click', close, { once: true });
+  }
+});
+
 /* --- Showcase state --- */
 let currentDataset = 'top10';
 let currentLang = 'en';
