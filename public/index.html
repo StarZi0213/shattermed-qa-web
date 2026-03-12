@@ -40,7 +40,7 @@
         <span class="stat"><strong>10,558</strong> Questions</span>
         <span class="stat"><strong>21</strong> LLMs Evaluated</span>
         <span class="stat"><strong>Bilingual</strong> EN & ZH</span>
-        <span class="stat"><strong>1,500</strong> Expert Validated</span>
+        <span class="stat"><strong>700</strong> Expert Validated</span>
       </p>
       <div class="hero-actions">
         <a href="#dataset" class="btn btn-primary">Explore Dataset</a>
@@ -58,8 +58,8 @@
       <h2 class="section-title">Abstract</h2>
       <div class="abstract-card">
         <p>While Large Language Models (LLMs) achieve expert-level performance on standard medical benchmarks through single-hop factual recall, they severely struggle with the complex, multi-hop diagnostic reasoning required in real-world clinical settings. A primary obstacle is <em>"shortcut learning,"</em> where models exploit highly connected, generic hub nodes (e.g., "inflammation") in knowledge graphs to bypass authentic micro-pathological cascades.</p>
-        <p>To address this, we introduce <strong>ShatterMed-QA</strong>, a bilingual benchmark of <strong>10,558 multi-hop clinical questions</strong> designed to rigorously evaluate deep diagnostic reasoning. Our framework constructs a topology-regularized medical Knowledge Graph using a novel <em>k</em>-Shattering algorithm, which physically prunes generic hubs to explicitly sever logical shortcuts. We synthesize evaluation vignettes by applying implicit bridge entity masking and topology-driven hard negative sampling, forcing models to navigate biologically plausible distractors without relying on superficial elimination.</p>
-        <p>Comprehensive evaluations of <strong>21 LLMs</strong> reveal massive performance degradation on our multi-hop tasks, particularly among domain-specific models. Crucially, restoring the masked evidence via Retrieval-Augmented Generation (RAG) triggers near-universal performance recovery, validating ShatterMed-QA's structural fidelity.</p>
+        <p>To address this, we introduce <strong>ShatterMed-QA</strong>, a bilingual benchmark of <strong>10,558 multi-hop clinical questions</strong> designed to rigorously evaluate deep diagnostic reasoning. Our framework constructs a topology-regularized medical Knowledge Graph using a novel <em>k</em>-Shattering algorithm, which physically prunes generic hubs to explicitly sever logical shortcuts. We synthesize the evaluation vignettes by applying implicit bridge entity masking and topology-driven hard negative sampling, forcing models to navigate biologically plausible distractors without relying on superficial elimination.</p>
+        <p>Comprehensive evaluations of <strong>21 LLMs</strong> reveal massive performance degradation on our multi-hop tasks, particularly among domain-specific models. Crucially, restoring the masked evidence via Retrieval-Augmented Generation (RAG) triggers near-universal performance recovery, validating ShatterMed-QA's structural fidelity and proving its efficacy in diagnosing the fundamental reasoning deficits of current medical AI. Explore the dataset, interactive examples, and full leaderboards at our project website: <a href="https://shattermed-qa-web.vercel.app/" target="_blank" rel="noopener">https://shattermed-qa-web.vercel.app/</a></p>
         <div class="keywords">
           <span class="kw">Large Language Models</span>
           <span class="kw">Medical QA</span>
@@ -116,6 +116,9 @@
     <div class="container">
       <h2 class="section-title">Dataset Statistics</h2>
       <p class="section-desc">10,558 meticulously synthesized clinical questions across 5 primary clinical tasks, bifurcated into bilingual and difficulty-based splits.</p>
+      <div class="golden-subset-intro">
+        <p>Utilizing our framework, we introduce a bilingual (English and Chinese) dataset of <strong>10,558 multi-hop clinical QA pairs</strong>. This includes a rigorously physician-vetted <strong>Golden Subset of 264</strong> highly complex diagnostic vignettes, establishing a pristine evaluation ground for frontier LLMs.</p>
+      </div>
 
       <div class="charts-row">
         <div class="chart-card">
