@@ -73,9 +73,13 @@ function renderQualityRadar() {
   ];
   Plotly.newPlot('chart-quality', data, {
     ...PLOTLY_LAYOUT_BASE,
-    polar: { radialaxis: { visible: true, range: [0, 5], gridcolor: '#e2e8f0' } },
-    legend: { orientation: 'h', y: -0.15 },
-    margin: { l: 60, r: 60, t: 40, b: 60 },
+    polar: {
+      radialaxis: { visible: true, range: [0, 5], gridcolor: '#e2e8f0', tickfont: { size: 11 } },
+      angularaxis: { tickfont: { size: 11 }, rotation: 90 },
+    },
+    legend: { orientation: 'h', y: -0.22, x: 0.5, xanchor: 'middle' },
+    margin: { l: 100, r: 100, t: 50, b: 100 },
+    height: 420,
   }, PLOTLY_CFG);
 }
 
