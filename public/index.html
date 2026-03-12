@@ -38,7 +38,7 @@
       <p class="subtitle">Topology-Regularized Multi-Hop Clinical Reasoning Benchmark for Exposing Shortcut Learning in Medical LLMs</p>
       <p class="hero-stats">
         <span class="stat"><strong>10,558</strong> Questions</span>
-        <span class="stat"><strong>20</strong> LLMs Evaluated</span>
+        <span class="stat"><strong>21</strong> LLMs Evaluated</span>
         <span class="stat"><strong>Bilingual</strong> EN & ZH</span>
         <span class="stat"><strong>1,500</strong> Expert Validated</span>
       </p>
@@ -59,7 +59,7 @@
       <div class="abstract-card">
         <p>While Large Language Models (LLMs) achieve expert-level performance on standard medical benchmarks through single-hop factual recall, they severely struggle with the complex, multi-hop diagnostic reasoning required in real-world clinical settings. A primary obstacle is <em>"shortcut learning,"</em> where models exploit highly connected, generic hub nodes (e.g., "inflammation") in knowledge graphs to bypass authentic micro-pathological cascades.</p>
         <p>To address this, we introduce <strong>ShatterMed-QA</strong>, a bilingual benchmark of <strong>10,558 multi-hop clinical questions</strong> designed to rigorously evaluate deep diagnostic reasoning. Our framework constructs a topology-regularized medical Knowledge Graph using a novel <em>k</em>-Shattering algorithm, which physically prunes generic hubs to explicitly sever logical shortcuts. We synthesize evaluation vignettes by applying implicit bridge entity masking and topology-driven hard negative sampling, forcing models to navigate biologically plausible distractors without relying on superficial elimination.</p>
-        <p>Comprehensive evaluations of <strong>20 LLMs</strong> reveal massive performance degradation on our multi-hop tasks, particularly among domain-specific models. Crucially, restoring the masked evidence via Retrieval-Augmented Generation (RAG) triggers near-universal performance recovery, validating ShatterMed-QA's structural fidelity.</p>
+        <p>Comprehensive evaluations of <strong>21 LLMs</strong> reveal massive performance degradation on our multi-hop tasks, particularly among domain-specific models. Crucially, restoring the masked evidence via Retrieval-Augmented Generation (RAG) triggers near-universal performance recovery, validating ShatterMed-QA's structural fidelity.</p>
         <div class="keywords">
           <span class="kw">Large Language Models</span>
           <span class="kw">Medical QA</span>
@@ -185,7 +185,7 @@
   <section id="results" class="section section-alt">
     <div class="container">
       <h2 class="section-title">Experimental Results</h2>
-      <p class="section-desc">Comprehensive zero-shot evaluation of 20 LLMs reveals systemic performance degradation on multi-hop tasks.</p>
+      <p class="section-desc">Comprehensive zero-shot evaluation of 21 LLMs reveals systemic performance degradation on multi-hop tasks.</p>
 
       <div class="chart-card full-width">
         <h3>Zero-Shot Accuracy by Model Category</h3>

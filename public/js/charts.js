@@ -106,10 +106,10 @@ function renderBenchmarkComparison() {
     marker: { color },
     hovertemplate:
       '<b>%{x}</b><br>' +
-      `${name}: %{y:.2f}<br>` +
+      name + ': %{y:.2f}<br>' +
       'Traceability: %{customdata[0]}<br>' +
-      'Size N: %{customdata[1]:,}<extra></extra>',
-    customdata: traceability.map((t, i) => [t, sizes[i]]),
+      'Size N: %{customdata[1]}<extra></extra>',
+    customdata: traceability.map((t, i) => [t, sizes[i].toLocaleString()]),
   });
 
   const data = [
