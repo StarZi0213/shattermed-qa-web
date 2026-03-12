@@ -59,27 +59,48 @@ function renderTaskBar() {
   }, PLOTLY_CFG);
 }
 
-/* ============ QUALITY RADAR ============ */
+/* ============ QUALITY RADAR (all 9 datasets) ============ */
 function renderQualityRadar() {
   const cats = ['Clarity', 'Validity', 'Difficulty', 'Distractor Sim.', 'Low Overlap A', 'Low Overlap B'];
   const norm = (v, max) => (v / max) * 5;
-  const ours = [4.70, 4.87, 3.11, norm(0.598, 1), norm(1 - 0.093, 1), norm(1 - 0.100, 1)];
-  const medqa = [3.92, 3.87, 2.96, 2.5, 2.5, 2.5];
-  const craft = [3.71, 3.52, 2.55, 2.5, 2.5, 2.5];
-  const data = [
-    { type: 'scatterpolar', r: [...ours, ours[0]], theta: [...cats, cats[0]], fill: 'toself', name: 'ShatterMed-QA', line: { color: '#2563eb' }, fillcolor: 'rgba(37,99,235,.15)' },
-    { type: 'scatterpolar', r: [...medqa, medqa[0]], theta: [...cats, cats[0]], fill: 'toself', name: 'MedQA', line: { color: '#f59e0b' }, fillcolor: 'rgba(245,158,11,.1)' },
-    { type: 'scatterpolar', r: [...craft, craft[0]], theta: [...cats, cats[0]], fill: 'toself', name: 'CRAFT-MedQA', line: { color: '#ef4444' }, fillcolor: 'rgba(239,68,68,.1)' },
+  const na = 2.5; // placeholder for dimensions not reported in other benchmarks
+  const datasets = [
+    { name: 'MedQA', clarity: 3.92, validity: 3.87, difficulty: 2.96, color: '#94a3b8' },
+    { name: 'MMedBench', clarity: 4.03, validity: 4.04, difficulty: 2.79, color: '#64748b' },
+    { name: 'MultiMedQA', clarity: 3.93, validity: 3.94, difficulty: 2.64, color: '#475569' },
+    { name: 'AfriMedQA', clarity: 3.80, validity: 3.72, difficulty: 2.83, color: '#f59e0b' },
+    { name: 'PubMedQA', clarity: 2.92, validity: 2.43, difficulty: 2.46, color: '#f97316' },
+    { name: 'CRAFT-MedQA', clarity: 3.71, validity: 3.52, difficulty: 2.55, color: '#ef4444' },
+    { name: 'MedReason', clarity: 3.79, validity: 3.81, difficulty: 3.04, color: '#ec4899' },
+    { name: 'MedQA-Evol', clarity: 4.17, validity: 4.32, difficulty: 2.94, color: '#8b5cf6' },
+    { name: 'ShatterMed-QA', clarity: 4.70, validity: 4.87, difficulty: 3.11, color: '#2563eb' },
   ];
+  const data = datasets.map((d, i) => {
+    const isOurs = d.name === 'ShatterMed-QA';
+    const r = isOurs
+      ? [d.clarity, d.validity, d.difficulty, norm(0.598, 1), norm(1 - 0.093, 1), norm(1 - 0.100, 1)]
+      : [d.clarity, d.validity, d.difficulty, na, na, na];
+    const rClosed = [...r, r[0]];
+    const thetaClosed = [...cats, cats[0]];
+    return {
+      type: 'scatterpolar',
+      r: rClosed,
+      theta: thetaClosed,
+      fill: 'toself',
+      name: d.name,
+      line: { color: d.color, width: isOurs ? 2.5 : 1.2 },
+      fillcolor: isOurs ? 'rgba(37,99,235,.25)' : 'rgba(128,128,128,.07)',
+    };
+  });
   Plotly.newPlot('chart-quality', data, {
     ...PLOTLY_LAYOUT_BASE,
     polar: {
       radialaxis: { visible: true, range: [0, 5], gridcolor: '#e2e8f0', tickfont: { size: 11 } },
       angularaxis: { tickfont: { size: 11 }, rotation: 90 },
     },
-    legend: { orientation: 'h', y: -0.22, x: 0.5, xanchor: 'middle' },
-    margin: { l: 100, r: 100, t: 50, b: 100 },
-    height: 420,
+    legend: { orientation: 'h', y: -0.35, x: 0.5, xanchor: 'middle', font: { size: 10 } },
+    margin: { l: 100, r: 100, t: 50, b: 120 },
+    height: 460,
   }, PLOTLY_CFG);
 }
 
